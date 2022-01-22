@@ -12,7 +12,7 @@ terraform {
   required_version = ">= 1.1.0"
 
   cloud {
-    organization = "Sergei-Biliarski"
+    organization = "REPLACE_ME"
 
     workspaces {
       name = "gh-actions-demo"
@@ -33,15 +33,12 @@ resource "aws_instance" "web" {
   ami                    = "ami-830c94e3"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
+
   user_data = <<-EOF
               #!/bin/bash
+              echo "This is my Telerik Academy Upskill DevOps project!" > index.html
               nohup busybox httpd -f -p 8080 &
               EOF
-  provisioner "file" {
-    source      = "beerisgood/index.html"
-    destination = "/var/www/html/index.html"
-  }
-    
 }
 
 resource "aws_security_group" "web-sg" {
