@@ -34,11 +34,25 @@ resource "aws_instance" "web" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.web-sg.id]
 
+  #provisioner "file" {
+  #  source      = "beerisgood"
+  #  destination = ""
+  #}
+  
+  # Original from TF KB
   user_data = <<-EOF
               #!/bin/bash
               echo "Hello, World" > index.html
+              pwd
               nohup busybox httpd -f -p 8080 &
               EOF
+
+  # Original from TF KB
+  #user_data = <<-EOF
+  #            #!/bin/bash
+  #            echo "Hello, World" > index.html
+  #            nohup busybox httpd -f -p 8080 &
+  #            EOF
 }
 
 resource "aws_security_group" "web-sg" {
